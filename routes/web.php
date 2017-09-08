@@ -41,7 +41,7 @@ Route::group(['prefix' => $adminRoute . '/' . $moduleRoute], function (Router $r
         ->name('admin::menus.edit.post')
         ->middleware('has-permission:edit-menus');
 
-    $router->delete('/{id}', 'MenuController@deleteDelete')
-        ->name('admin::menus.delete.delete')
+    $router->post('/{id}', 'MenuController@postDelete')
+        ->name('admin::menus.delete.post')
         ->middleware('has-permission:delete-menus');
 });
