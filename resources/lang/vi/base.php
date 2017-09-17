@@ -23,6 +23,7 @@ return [
 
     'add' => 'Thêm',
     'remove' => 'Xóa mục này',
+    'refresh_menu_links' => 'Làm mới các liên kết của thanh thực đơn này',
 
     'slug' => 'Tên truy nhập',
     'status' => 'Hiện trạng',

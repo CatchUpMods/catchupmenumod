@@ -23,6 +23,7 @@ return [
 
     'add' => 'Add',
     'remove' => 'Remove',
+    'refresh_menu_links' => 'Refresh menu links',
 
     'slug' => 'Slug',
     'status' => 'Status',

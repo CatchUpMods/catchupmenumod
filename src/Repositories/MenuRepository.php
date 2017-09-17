@@ -55,6 +55,7 @@ class MenuRepository extends EloquentBaseRepository implements MenuRepositoryCon
             return $result;
         }
         DB::beginTransaction();
+
         if($deletedNodes) {
             $this->menuNodeRepository->delete($deletedNodes);
         }
@@ -62,6 +63,7 @@ class MenuRepository extends EloquentBaseRepository implements MenuRepositoryCon
         if ($menuStructure !== null) {
             $this->updateMenuStructure($result, $menuStructure);
         }
+
         DB::commit();
 
         return $result;

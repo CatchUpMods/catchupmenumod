@@ -25,6 +25,8 @@ class CreateMenuAction extends AbstractAction
     {
         do_action(BASE_ACTION_BEFORE_CREATE, WEBED_MENUS, 'create.post');
 
+        $data['created_by'] = get_current_logged_user_id();
+
         $result = $this->repository->createMenu($data, $menuStructure);
 
         do_action(BASE_ACTION_AFTER_CREATE, WEBED_MENUS, $result);

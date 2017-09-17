@@ -21,18 +21,21 @@ class MenuNodeRepository extends EloquentBaseRepository implements MenuNodeRepos
      */
     public function updateMenuNode($menuId, array $nodeData, $order, $parentId = null)
     {
-        $result = $this->createOrUpdate(array_get($nodeData, 'id'), [
+        $node = $this->model->findOrNew(array_get($nodeData, 'id'));
+        $node->fill([
             'menu_id' => $menuId,
             'parent_id' => $parentId,
             'entity_id' => array_get($nodeData, 'entity_id') ?: null,
             'type' => array_get($nodeData, 'type'),
-            'title' => array_get($nodeData, 'title'),
             'icon_font' => array_get($nodeData, 'icon_font'),
             'css_class' => array_get($nodeData, 'css_class'),
             'target' => array_get($nodeData, 'target'),
-            'url' => array_get($nodeData, 'url'),
             'order' => $order,
         ]);
+        $node->title = array_get($nodeData, 'title') ?: $node->resolved_title;
+        $node->url = array_get($nodeData, 'type') == 'custom_link' ? array_get($nodeData, 'url') : $node->resolved_url;
+
+        $result = $node->save();
 
         if(!$result) {
             return $result;
@@ -43,12 +46,12 @@ class MenuNodeRepository extends EloquentBaseRepository implements MenuNodeRepos
         /**
          * Save the children
          */
-        if($result && is_array($children)) {
+        if(is_array($children)) {
             foreach ($children as $key => $child) {
-                $this->updateMenuNode($menuId, $child, $key, $result);
+                $this->updateMenuNode($menuId, $child, $key, $node->id);
             }
         }
-        return $result;
+        return $node->id;
     }
 
     /**

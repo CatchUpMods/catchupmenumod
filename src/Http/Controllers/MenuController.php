@@ -98,9 +98,8 @@ class MenuController extends BaseAdminController
     public function postCreate(CreateMenuRequest $request, CreateMenuAction $action)
     {
         $data = $this->parseData($request);
-        $data['created_by'] = $this->loggedInUser->id;
 
-        $menuStructure = json_decode($this->request->get('menu_structure'), true);
+        $menuStructure = json_decode($this->request->input('menu_structure'), true);
 
         $result = $action->run($data, $menuStructure);
 
@@ -164,8 +163,8 @@ class MenuController extends BaseAdminController
     public function postEdit(UpdateMenuRequest $request, UpdateMenuAction $action, $id)
     {
         $data = $this->parseData($request);
-        $deletedNodes = json_decode($this->request->get('deleted_nodes'), true);
-        $menuStructure = json_decode($this->request->get('menu_structure'), true);
+        $deletedNodes = json_decode($this->request->input('deleted_nodes'), true);
+        $menuStructure = json_decode($this->request->input('menu_structure'), true);
 
         $result = $action->run($id, $data, $menuStructure, $deletedNodes);
 
@@ -187,7 +186,7 @@ class MenuController extends BaseAdminController
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function deleteDelete(DeleteMenuAction $action, $id)
+    public function postDelete(DeleteMenuAction $action, $id)
     {
         $result = $action->run($id);
 
@@ -201,12 +200,11 @@ class MenuController extends BaseAdminController
     protected function parseData(Request $request)
     {
         return [
-            'menu_structure' => $request->get('menu_structure'),
-            'deleted_nodes' => $request->get('deleted_nodes'),
-            'status' => $request->get('status'),
-            'title' => $request->get('title'),
-            'slug' => ($request->get('slug') ? str_slug($request->get('slug')) : str_slug($request->get('title'))),
-            'updated_by' => $this->loggedInUser->id,
+            'menu_structure' => $request->input('menu_structure'),
+            'deleted_nodes' => $request->input('deleted_nodes'),
+            'status' => $request->input('status'),
+            'title' => $request->input('title'),
+            'slug' => ($request->input('slug') ? str_slug($request->input('slug')) : str_slug($request->input('title'))),
         ];
     }
 }

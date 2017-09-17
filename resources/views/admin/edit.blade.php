@@ -36,6 +36,15 @@
                         <i class="icon-layers font-dark"></i>
                         {{ trans('webed-menus::base.menu_info') }}
                     </h3>
+                    <div class="box-tools">
+                        <button type="submit"
+                                name="_continue_edit"
+                                value="1"
+                                class="btn btn-sm btn-danger">
+                            <i class="fa fa-refresh"></i>
+                            {{ trans('webed-menus::base.refresh_menu_links') }}
+                        </button>
+                    </div>
                 </div>
                 <div class="box-body">
                     <div class="form-group">

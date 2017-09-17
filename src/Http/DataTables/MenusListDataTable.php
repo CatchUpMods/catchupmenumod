@@ -90,7 +90,7 @@ class MenusListDataTable extends AbstractDataTables
      */
     protected function fetchDataForAjax()
     {
-        return datatable()->of($this->model)
+        return webed_datatable()->of($this->model)
             ->rawColumns(['actions'])
             ->editColumn('status', function ($item) {
                 $status = $item->status ? 'activated' : 'disabled';
@@ -100,7 +100,7 @@ class MenusListDataTable extends AbstractDataTables
                 /*Edit link*/
                 $activeLink = route('admin::menus.update-status.post', ['id' => $item->id, 'status' => 1]);
                 $disableLink = route('admin::menus.update-status.post', ['id' => $item->id, 'status' => 0]);
-                $deleteLink = route('admin::menus.delete.delete', ['id' => $item->id]);
+                $deleteLink = route('admin::menus.delete.post', ['id' => $item->id]);
 
                 /*Buttons*/
                 $editBtn = link_to(route('admin::menus.edit.get', ['id' => $item->id]), trans('webed-core::datatables.edit'), ['class' => 'btn btn-sm btn-outline green']);
@@ -126,7 +126,7 @@ class MenusListDataTable extends AbstractDataTables
                 $deleteBtn = form()->button(trans('webed-core::datatables.delete'), [
                     'title' => trans('webed-core::datatables.delete_this_item'),
                     'data-ajax' => $deleteLink,
-                    'data-method' => 'DELETE',
+                    'data-method' => 'POST',
                     'data-toggle' => 'confirmation',
                     'class' => 'btn btn-outline red-sunglo btn-sm ajax-link',
                     'type' => 'button',
