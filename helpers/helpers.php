@@ -1,4 +1,5 @@
 <?php
+
 use \WebEd\Base\Menu\Repositories\Contracts\MenuRepositoryContract;
 use WebEd\Base\Menu\Repositories\Contracts\MenuNodeRepositoryContract;
 use \WebEd\Base\Menu\Repositories\MenuRepository;
@@ -59,12 +60,14 @@ if (!function_exists('webed_render_menu')) {
 
         $menuNodes = $nodeRepo->getMenuNodes($menu);
 
-        return view($options['view'], [
+        $html = view($options['view'], [
             'menuNodes' => $menuNodes,
             'options' => $options,
             'container' => true,
             'isChild' => false,
         ])->render();
+
+        return preg_replace("/\r\n|\r|\n|  /",'',$html);
     }
 }
 
@@ -85,9 +88,9 @@ if (!function_exists('is_menu_item_active')) {
                 }
                 break;
             default:
-                if($type === $node->type) {
-                    if(is_array($entityId)) {
-                        if(in_array($node->entity_id, $entityId)) {
+                if ($type === $node->type) {
+                    if (is_array($entityId)) {
+                        if (in_array($node->entity_id, $entityId)) {
                             return true;
                         }
                     } else {
