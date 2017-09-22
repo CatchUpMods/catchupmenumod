@@ -57,9 +57,10 @@ class MenuNodeRepository extends EloquentBaseRepository implements MenuNodeRepos
     /**
      * @param Menu|int $menuId
      * @param null|int $parentId
+     * @param int $level
      * @return Collection|null
      */
-    public function getMenuNodes($menuId, $parentId = null)
+    public function getMenuNodes($menuId, $parentId = null, $level = 0)
     {
         if($menuId instanceof Menu) {
             $menu = $menuId;
@@ -84,7 +85,8 @@ class MenuNodeRepository extends EloquentBaseRepository implements MenuNodeRepos
 
         foreach ($nodes as $node) {
             $node->model_title = $node->title;
-            $node->children = $this->getMenuNodes($menuId, $node->id);
+            $node->level = $level;
+            $node->children = $this->getMenuNodes($menuId, $node->id, $level + 1);
             $result[] = $node;
             /**
              * Reset related nodes when done
