@@ -4,7 +4,8 @@ class InsertNoticesToUpdateMenuPageHook
 {
     public function execute()
     {
-        if (request()->route()->getName() != 'admin::menus.edit.get') {
+        $currentRoute = request()->route();
+        if (!$currentRoute || $currentRoute->getName() != 'admin::menus.edit.get') {
             return;
         }
 
