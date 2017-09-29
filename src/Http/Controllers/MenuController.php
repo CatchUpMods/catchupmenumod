@@ -13,7 +13,7 @@ use WebEd\Base\Menu\Repositories\MenuRepository;
 
 class MenuController extends BaseAdminController
 {
-    protected $module = 'webed-menus';
+    protected $module = WEBED_MENUS;
 
     /**
      * @param MenuRepository $repository

@@ -146,12 +146,13 @@ class DashboardMenu
     public function render()
     {
         $links = $this->rearrangeLinks();
+
         return view('webed-menus::admin.dashboard-menu.menu', [
             'isChildren' => false,
             'links' => $links,
             'level' => 0,
             'active' => $this->active,
-            'loggedInUser' => $this->loggedInUser
+            'loggedInUser' => get_current_logged_user(),
         ])->render();
     }
 }

@@ -2,9 +2,6 @@
 
 use WebEd\Base\Http\DataTables\AbstractDataTables;
 use WebEd\Base\Menu\Models\Menu;
-use Yajra\Datatables\Engines\CollectionEngine;
-use Yajra\Datatables\Engines\EloquentEngine;
-use Yajra\Datatables\Engines\QueryBuilderEngine;
 
 class MenusListDataTable extends AbstractDataTables
 {
@@ -20,7 +17,7 @@ class MenusListDataTable extends AbstractDataTables
     /**
      * @return array
      */
-    public function headings()
+    public function headings(): array
     {
         return [
             'title' => [
@@ -49,7 +46,7 @@ class MenusListDataTable extends AbstractDataTables
     /**
      * @return array
      */
-    public function columns()
+    public function columns(): array
     {
         return [
             ['data' => 'title', 'name' => 'title'],
@@ -63,7 +60,7 @@ class MenusListDataTable extends AbstractDataTables
     /**
      * @return string
      */
-    public function run()
+    public function run(): string
     {
         $this->setAjaxUrl(route('admin::menus.index.post'), 'POST');
 
@@ -86,7 +83,7 @@ class MenusListDataTable extends AbstractDataTables
     }
 
     /**
-     * @return CollectionEngine|EloquentEngine|QueryBuilderEngine|mixed
+     * @return mixed
      */
     protected function fetchDataForAjax()
     {
@@ -134,5 +131,13 @@ class MenusListDataTable extends AbstractDataTables
 
                 return $editBtn . $activeBtn . $disableBtn . $deleteBtn;
             });
+    }
+
+    /**
+     * @return array
+     */
+    protected function groupAction(): array
+    {
+        return [];
     }
 }
