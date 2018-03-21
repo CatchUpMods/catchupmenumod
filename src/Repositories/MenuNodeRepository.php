@@ -33,7 +33,7 @@ class MenuNodeRepository extends EloquentBaseRepository implements MenuNodeRepos
             'order' => $order,
         ]);
         $node->title = array_get($nodeData, 'title') ?: $node->resolved_title;
-        $node->url = array_get($nodeData, 'type') == 'custom_link' ? array_get($nodeData, 'url') : $node->resolved_url;
+        $node->url = (array_get($nodeData, 'type') == 'custom-link' || array_get($nodeData, 'type') == 'custom_link') ? array_get($nodeData, 'url') : $node->resolved_url;
 
         $result = $node->save();
 
